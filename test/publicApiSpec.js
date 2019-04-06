@@ -611,51 +611,65 @@ describe('Public API method tests', function () {
             });
         });
         describe('functionality', function () {
-            it('sets date to beginning of (a) year', function () {
-                dtp.useCurrent('year');
-                dtp.show();
-                var date = dtp.date();
-                expect(date.month()).toEqual(0);
-                expect(date.date()).toEqual(1);
-                expect(date.hour()).toEqual(0);
-                expect(date.minute()).toEqual(0);
-                expect(date.second()).toEqual(0);
-                expect(date.millisecond()).toEqual(0);
+            describe('sets date to beginning of', function () {
+                var mockDateTime = {
+                    y:2019,
+                    M:3,
+                    d:6,
+                    h:15,
+                    m:10,
+                    s:3,
+                    ms:123
+                };
+
+                beforeEach(function () {
+                    jasmine.clock().install();
+                    jasmine.clock().mockDate(moment(mockDateTime).toDate());
+                });
+
+                afterEach(function () {
+                    jasmine.clock().uninstall();
+                });
+
+                it('year', function () {
+                    dtp.useCurrent('year');
+                    dtp.show();
+                    expect(dtp.date().isSame(moment({ // Jan 01 2019 00:00:00.000
+                        M: 0,
+                        d: 1
+                    }))).toBe(true);
+                });
+                it('month', function () {
+                    dtp.useCurrent('month');
+                    dtp.show();
+                    expect(dtp.date().isSame(moment({ // Apr 01 2019 00:00:00.000
+                        d: 1
+                    }))).toBe(true);
+                });
+                it('day', function () {
+                    dtp.useCurrent('day');
+                    dtp.show();
+                    expect(dtp.date().isSame(moment({
+                        h: 0 // Can't pass an empty object to get "Apr 06 2019 00:00:00.000"
+                    }))).toBe(true);
+                });
+                it('hour', function () {
+                    dtp.useCurrent('hour');
+                    dtp.show();
+                    expect(dtp.date().isSame(moment({ // Apr 06 2019 15:00:00.000
+                        h: mockDateTime.h
+                    }))).toBe(true);
+                });
+                it('minute', function () {
+                    dtp.useCurrent('minute');
+                    dtp.show();
+                    expect(dtp.date().isSame(moment({ // Apr 06 2019 15:10:00.000
+                        h: mockDateTime.h,
+                        m: mockDateTime.m
+                    }))).toBe(true);
+                });
             });
-            it('sets date to beginning of (a) month', function () {
-                dtp.useCurrent('month');
-                dtp.show();
-                var date = dtp.date();
-                expect(date.date()).toEqual(1);
-                expect(date.hour()).toEqual(0);
-                expect(date.minute()).toEqual(0);
-                expect(date.second()).toEqual(0);
-                expect(date.millisecond()).toEqual(0);
-            });
-            it('sets date to beginning of (a) day', function () {
-                dtp.useCurrent('day');
-                dtp.show();
-                var date = dtp.date();
-                expect(date.hour()).toEqual(0);
-                expect(date.minute()).toEqual(0);
-                expect(date.second()).toEqual(0);
-                expect(date.millisecond()).toEqual(0);
-            });
-            it('sets date to beginning of (an) hour', function () {
-                dtp.useCurrent('hour');
-                dtp.show();
-                var date = dtp.date();
-                expect(date.minute()).toEqual(0);
-                expect(date.second()).toEqual(0);
-                expect(date.millisecond()).toEqual(0);
-            });
-            it('sets date to beginning of (a) minute', function () {
-                dtp.useCurrent('minute');
-                dtp.show();
-                var date = dtp.date();
-                expect(date.second()).toEqual(0);
-                expect(date.millisecond()).toEqual(0);
-            });
+
             it('triggers a change event upon show() and input field is empty', function () {
                 dtp.useCurrent(true);
                 dtp.show();
