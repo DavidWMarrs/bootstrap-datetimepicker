@@ -1204,19 +1204,19 @@
                 var currentMoment,
                     useCurrentGranularity = {
                         'year': function (m) {
-                            return m.month(0).date(1).hours(0).seconds(0).minutes(0);
+                            return m.month(0).date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
                         },
                         'month': function (m) {
-                            return m.date(1).hours(0).seconds(0).minutes(0);
+                            return m.date(1).hours(0).minutes(0).seconds(0).milliseconds(0);
                         },
                         'day': function (m) {
-                            return m.hours(0).seconds(0).minutes(0);
+                            return m.hours(0).minutes(0).seconds(0).milliseconds(0);
                         },
                         'hour': function (m) {
-                            return m.seconds(0).minutes(0);
+                            return m.minutes(0).seconds(0).milliseconds(0);
                         },
                         'minute': function (m) {
-                            return m.seconds(0);
+                            return m.seconds(0).milliseconds(0);
                         }
                     };
 
