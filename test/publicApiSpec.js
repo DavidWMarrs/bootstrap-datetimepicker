@@ -611,6 +611,51 @@ describe('Public API method tests', function () {
             });
         });
         describe('functionality', function () {
+            it('sets date to beginning of (a) year', function () {
+                dtp.useCurrent('year');
+                dtp.show();
+                var date = dtp.date();
+                expect(date.month()).toEqual(0);
+                expect(date.date()).toEqual(1);
+                expect(date.hour()).toEqual(0);
+                expect(date.minute()).toEqual(0);
+                expect(date.second()).toEqual(0);
+                expect(date.millisecond()).toEqual(0);
+            });
+            it('sets date to beginning of (a) month', function () {
+                dtp.useCurrent('month');
+                dtp.show();
+                var date = dtp.date();
+                expect(date.date()).toEqual(1);
+                expect(date.hour()).toEqual(0);
+                expect(date.minute()).toEqual(0);
+                expect(date.second()).toEqual(0);
+                expect(date.millisecond()).toEqual(0);
+            });
+            it('sets date to beginning of (a) day', function () {
+                dtp.useCurrent('day');
+                dtp.show();
+                var date = dtp.date();
+                expect(date.hour()).toEqual(0);
+                expect(date.minute()).toEqual(0);
+                expect(date.second()).toEqual(0);
+                expect(date.millisecond()).toEqual(0);
+            });
+            it('sets date to beginning of (an) hour', function () {
+                dtp.useCurrent('hour');
+                dtp.show();
+                var date = dtp.date();
+                expect(date.minute()).toEqual(0);
+                expect(date.second()).toEqual(0);
+                expect(date.millisecond()).toEqual(0);
+            });
+            it('sets date to beginning of (a) minute', function () {
+                dtp.useCurrent('minute');
+                dtp.show();
+                var date = dtp.date();
+                expect(date.second()).toEqual(0);
+                expect(date.millisecond()).toEqual(0);
+            });
             it('triggers a change event upon show() and input field is empty', function () {
                 dtp.useCurrent(true);
                 dtp.show();
